@@ -1,0 +1,19 @@
+tobc$:
+LOCAL bc$(15),i%
+bc$=""
+i%=1
+DO
+ bcoct%(i%)=nwoct%(i%) OR wcoct%(i%)
+ i%=i%+1
+UNTIL i%>4
+i%=1
+DO
+ bc$=bc$+NUM$(bcoct%(i%),3)
+ IF i%=4
+  BREAK
+ ELSE
+  bc$=bc$+"."
+ ENDIF
+ i%=i%+1
+UNTIL i%>4
+RETURN bc$

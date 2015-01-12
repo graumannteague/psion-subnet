@@ -1,0 +1,82 @@
+tocidr%:
+LOCAL i%,cidr%,mask%,bit%,state%,brk%
+cidr%=0
+i%=1
+DO
+ mask%=128
+ DO
+  bit%=nmoct%(i%) AND mask%
+  IF bit%<>0
+   cidr%=cidr%+1
+  ENDIF
+  mask%=mask%/2
+ UNTIL mask%<1
+ i%=i%+1
+UNTIL i%>4
+
+REM verify netmask is all zeroes, or contig ones then contig zeroes, or all ones
+REM we exclude the all zeroes or all ones case trivially, and test for the other condition with a FSM
+REM we start in state START, consuming bits from MSB to LSB
+REM state START     - consume 0 => STOP_ERR
+REM                 - consume 1 => SEEN_ONE
+REM state SEEN_ONE  - consume 0 => SEEN_ZERO
+REM                 - consume 1 => SEEN_ONE
+REM state SEEN_ZERO - consume 0 => SEEN_ZERO
+REM                 - consume 1 => STOP_ERR
+REM if 32 bits consumed without moving to STOP_ERR, move to STOP_OK
+REM state in state%, START==1, SEEN_ONE==2, SEEN_ZERO==3, STOP_OK==4, STOP_ERR==5
+
+state%=1
+brk%=0
+IF cidr%<>0 OR cidr%<>32
+ i%=1
+ DO
+  mask%=128
+  DO
+   bit%=nmoct%(i%) AND mask%
+   IF state%=1
+    REM START
+    IF bit%=0
+	 state%=5
+     mask%=mask%/2
+	 CONTINUE
+	ELSE
+     state%=2
+	 mask%=mask%/2
+	 CONTINUE
+	ENDIF
+   ELSEIF state%=2
+    REM SEEN_ONE
+	IF bit%=0
+	 state%=3
+	 mask%=mask%/2
+	 CONTINUE
+	ELSE
+	 mask%=mask%/2
+	 CONTINUE
+	ENDIF
+   ELSEIF state%=3
+    REM SEEN_ZERO
+	IF bit%=0
+	 mask%=mask%/2
+	 CONTINUE
+	ELSE
+	 state%=5
+	 mask%=mask%/2
+	 CONTINUE
+	ENDIF
+   ELSEIF state%=5
+    REM STOP_ERR
+	brk%=1
+	cidr%=-1
+	BREAK
+   ENDIF
+  UNTIL mask%<1
+  IF brk%=1
+   BREAK
+  ENDIF
+  i%=i%+1
+ UNTIL i%>4
+ENDIF
+RETURN cidr%
+

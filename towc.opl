@@ -1,0 +1,20 @@
+towc$:
+LOCAL wc$(15),i%
+wc$=""
+i%=1
+DO
+ wcoct%(i%)=255-nmoct%(i%)
+ i%=i%+1
+UNTIL i%>4
+i%=1
+DO
+ wc$=wc$+NUM$(wcoct%(i%),3)
+ IF i%=4
+  BREAK
+ ELSE
+  wc$=wc$+"."
+ ENDIF
+ i%=i%+1
+UNTIL i%>4
+RETURN wc$
+

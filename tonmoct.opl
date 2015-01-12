@@ -1,0 +1,29 @@
+tonmoct:(cidr%)
+LOCAL i%,mask%,brk%,count%
+count%=cidr%
+brk%=0
+i%=1
+DO
+ nmoct%(i%)=0
+ i%=i%+1
+UNTIL i%>4
+i%=1
+DO
+ mask%=128
+ DO
+  IF count%>0
+   nmoct%(i%)=nmoct%(i%) OR mask%
+   count%=count%-1
+   mask%=mask%/2
+   CONTINUE
+  ELSE
+   brk%=1
+   BREAK
+  ENDIF
+ UNTIL mask%<1
+ IF brk%=1
+  BREAK
+ ENDIF
+ i%=i%+1
+UNTIL i%>4
+

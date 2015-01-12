@@ -1,0 +1,12 @@
+iptooct%:(ip$)
+LOCAL i%
+i%=1
+DO
+ oct%(i%)=VAL(MID$(ip$,((i%-1)*4)+1,3))
+ IF oct%(i%)<0 OR oct%(i%)>255
+  RETURN -1
+ ENDIF
+ i%=i%+1
+UNTIL i%>4
+RETURN 0
+

@@ -1,0 +1,67 @@
+subnet:
+LOCAL ip$(15),nm$(15),cidr%,wc$(15),nw$(18),bc$(15),ret%,opt%
+GLOBAL oct%(4),nmoct%(4),nwoct%(4),wcoct%(4),bcoct%(4)
+ONERR addrerr::
+address::
+CLS :PRINT "ADDRESS"
+ip$="aaa.bbb.ccc.ddd"
+EDIT ip$
+ret%=iptooct%:(ip$)
+IF ret%=-1
+ GOTO addrerr::
+ENDIF
+BEEP 20,1186
+netmask::
+CLS :opt%=MENU("NETMASK,CIDR")
+IF opt%=0
+ STOP
+ENDIF
+IF opt%=1
+ ONERR nmerr::
+ CLS :PRINT "NETMASK"
+ nm$="aaa.bbb.ccc.ddd"
+ EDIT nm$
+ ret%=nmtooct%:(nm$)
+ IF ret%=-1
+  GOTO nmerr::
+ ENDIF
+ cidr%=tocidr%:
+ IF cidr%=-1
+  GOTO cidrerr::
+ ENDIF
+ELSEIF opt%=2
+ ONERR cidrerr::
+ CLS :PRINT "CIDR (E.G. 24)"
+ INPUT cidr%
+ IF cidr%<0 OR cidr%>32
+  GOTO cidrerr::
+ ENDIF
+ tonmoct:(cidr%)
+ENDIF
+BEEP 20,1069 :BEEP 20,1532
+wc$=towc$:
+nw$=tonw$:(cidr%)
+bc$=tobc$:
+CLS :PRINT "WILDCARD"
+VIEW(2,wc$)
+CLS :PRINT "NETWORK"
+VIEW(2,nw$)
+CLS :PRINT "BROADCAST"
+VIEW(2,bc$)
+STOP
+
+addrerr::
+ BEEP 20,1532 :BEEP 20,1126
+ CLS :PRINT "INVALID ADDRESS"
+ PAUSE 40
+ GOTO address::
+nmerr::
+ BEEP 20,1532 :BEEP 20,1126
+ CLS :PRINT "INVALID NETMASK"
+ PAUSE 40
+ GOTO netmask::
+cidrerr::
+ BEEP 20,1532 :BEEP 20,1126
+ CLS :PRINT "INVALID CIDR"
+ PAUSE 40
+ GOTO netmask::

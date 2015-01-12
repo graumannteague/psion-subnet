@@ -1,0 +1,21 @@
+tonw$:(cidr%)
+LOCAL nw$(18),i%
+nw$=""
+i%=1
+DO
+ nwoct%(i%)=oct%(i%) AND nmoct%(i%)
+ i%=i%+1
+UNTIL i%>4
+i%=1
+DO
+ nw$=nw$+NUM$(nwoct%(i%),3)
+ IF i%=4
+  BREAK
+ ELSE
+  nw$=nw$+"."
+ ENDIF
+ i%=i%+1
+UNTIL i%>4
+nw$=nw$+"/"+NUM$(cidr%,2)
+RETURN nw$
+
