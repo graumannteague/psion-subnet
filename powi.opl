@@ -1,0 +1,13 @@
+powi%:(b%,n%)
+LOCAL p%,i%
+REM precondition - args both ints, n%>=0
+REM this ensures an int return
+p%=1
+IF n%>0
+ i%=n%
+ WHILE i%>0
+  p%=p%*b%
+  i%=i%-1
+ ENDWH
+ENDIF
+RETURN p%

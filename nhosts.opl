@@ -1,0 +1,5 @@
+nhosts%:(cidr%)
+LOCAL n%
+n%=powi%:(2,32-cidr%)-2
+return n%
+
