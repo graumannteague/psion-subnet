@@ -1,4 +1,4 @@
-nmtooct:(nm$)
+nmtooct%:(nm$)
 LOCAL i%
 i%=1
 DO
