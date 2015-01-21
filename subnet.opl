@@ -1,5 +1,5 @@
 subnet:
-LOCAL ip$(15),nm$(15),cidr%,wc$(15),nw$(18),bc$(15),nh$,ret%,opt%
+LOCAL ip$(15),nm$(15),cidr%,wc$(15),nw$(18),bc$(15),nh$(10),ret%,opt%
 GLOBAL oct%(4),nmoct%(4),nwoct%(4),wcoct%(4),bcoct%(4)
 ONERR addrerr::
 address::
