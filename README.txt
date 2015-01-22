@@ -3,7 +3,7 @@ BUILD NOTES
 
 * send all .opl files EXCEPT tocidr.opl - this is a (now outdated) copy of
   tocidr_norems.opl, but it contains valuable comments on how the finite
-  state machine for verifying the CIDR was implemented.
+  state machine for verifying the netmask was implemented.
 * you can send via XMODEM in Minicom - first send in Minicom, then go to
   COMMS -> RECEIVE -> PROCEDURE on the Organiser.
 * the filename on the Organiser should match the PROCEDURE name on the
