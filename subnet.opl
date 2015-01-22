@@ -1,5 +1,5 @@
 subnet:
-LOCAL ip$(15),nm$(15),cidr%,wc$(15),nw$(18),bc$(15),nh$(10),ret%,opt%
+LOCAL ip$(15),nm$(15),cidr%,wc$(15),nw$(18),bc$(15),hmin$(15),hmax$(15),hrange$(31),nh$(10),ret%,opt%
 GLOBAL oct%(4),nmoct%(4),nwoct%(4),wcoct%(4),bcoct%(4)
 ONERR addrerr::
 address::
@@ -33,7 +33,7 @@ ELSEIF opt%=2
  ONERR cidrerr::
  CLS :PRINT "CIDR (E.G. 24)"
  INPUT cidr%
- IF cidr%<0 OR cidr%>32
+ IF cidr%<0 OR cidr%>30
   GOTO cidrerr::
  ENDIF
  tonmoct:(cidr%)
@@ -42,6 +42,9 @@ BEEP 20,1069 :BEEP 20,1532
 wc$=towc$:
 nw$=tonw$:(cidr%)
 bc$=tobc$:
+hmin$=hostmin$:
+hmax$=hostmax$:
+hrange$=hostmin$+"-"+hostmax$
 nh$=NUM$(nhosts%:(cidr%),10)
 CLS :PRINT "WILDCARD"
 VIEW(2,wc$)
@@ -49,6 +52,8 @@ CLS :PRINT "NETWORK"
 VIEW(2,nw$)
 CLS :PRINT "BROADCAST"
 VIEW(2,bc$)
+CLS :PRINT "HOST RANGE"
+VIEW(2,hrange$)
 CLS :PRINT "HOSTS/NET"
 VIEW(2,nh$)
 STOP
