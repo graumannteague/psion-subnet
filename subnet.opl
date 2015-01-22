@@ -39,6 +39,7 @@ ELSEIF opt%=2
  tonmoct:(cidr%)
 ENDIF
 BEEP 20,1069 :BEEP 20,1532
+ONERR OFF
 wc$=towc$:
 nw$=tonw$:(cidr%)
 bc$=tobc$:
