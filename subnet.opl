@@ -44,7 +44,7 @@ nw$=tonw$:(cidr%)
 bc$=tobc$:
 hmin$=hostmin$:
 hmax$=hostmax$:
-hrange$=hostmin$+"-"+hostmax$
+hrange$=hmin$+"-"+hmax$
 nh$=NUM$(nhosts%:(cidr%),10)
 CLS :PRINT "WILDCARD"
 VIEW(2,wc$)
